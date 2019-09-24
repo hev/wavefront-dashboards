@@ -1,0 +1,548 @@
+{
+  "name": "PKS Master Node Monitoring",
+  "url": "Basic",
+  "eventFilterType": "BYCHART",
+  "displayDescription": false,
+  "displaySectionTableOfContents": true,
+  "displayQueryParameters": true,
+  "sections": [
+    {
+      "rows": [
+        {
+          "charts": [
+            {
+              "chartSettings": {
+                "type": "markdown-widget",
+                "plainMarkdownContent": "|  |  |\n| --- | --- |\n| ![](https://vmguru.com/wp-content/uploads/2018/02/pivotal-container-service-logo.png) | This Dashoard is designed to give PKS Operators visibility into all of thier Master nodes across multiple installations. To set this up in your PKS isntallation, go the Monitoring section within Settings. Check \"Enable Node-Exporter on master\" and insert the following config into your tile. This dashboard works with versions PKS 1.5+, see the [docs](https://docs-pcf-staging.cfapps.io/pks/1-5/monitor-etcd.html) for more details. \n\n```\n[[outputs.wavefront]]\n   token=\"<your-direct-ingest-token>\"\n   url=\"https://<your-instance>.wavefront.com\"\n[[processors.override]]         \n  [processors.override.tags]\n    director = \"<your-director-name>\"\n```\n\n",
+                "autoColumnTags": false,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Enterprise PKS",
+              "units": "Units",
+              "base": 0,
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 0,
+                  "h": 8,
+                  "w": 4
+                }
+              },
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "",
+                  "secondaryAxis": false,
+                  "scatterPlotSource": "Y",
+                  "querybuilderSerialization": "{\"_v\":1,\"metric\":\"\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                  "querybuilderEnabled": true,
+                  "sourceDescription": ""
+                }
+              ],
+              "noDefaultEvents": false
+            },
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "sparklineDisplayFontSize": "100",
+                "fixedLegendFilterLimit": 5,
+                "sparklineValueColorMapColors": [],
+                "fixedLegendPosition": "RIGHT",
+                "customTags": [],
+                "lineType": "linear",
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "windowing": "full",
+                "sparklineSize": "BACKGROUND",
+                "fixedLegendFilterSort": "TOP",
+                "sparklineValueColorMapValuesV2": [],
+                "y1Units": "",
+                "sparklineDisplayValueType": "VALUE",
+                "type": "sparkline",
+                "y1UnitAutoscaling": false,
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ],
+                "tagMode": "all",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDecimalPrecision": 0,
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Master Count",
+              "summarization": "MEAN",
+              "base": 0,
+              "chartAttributes": {
+                "singleStat": {
+                  "sparklineDisplayLabel": "A",
+                  "sparklineDisplaySubLabel": "Master Count"
+                },
+                "dashboardLayout": {
+                  "x": 4,
+                  "y": 0,
+                  "h": 8,
+                  "w": 2
+                }
+              },
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "sum(ts(etcd.server.id.gauge))",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"metric\":\"ts(etcd.server.id.gauge)\",\"filters\":[[],\"and\"],\"functions\":[[\"sum\",[]]],\"_v\":1}",
+                  "querybuilderEnabled": true
+                }
+              ],
+              "noDefaultEvents": false
+            },
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "fixedLegendFilterLimit": 9,
+                "fixedLegendPosition": "BOTTOM",
+                "customTags": [],
+                "lineType": "linear",
+                "windowing": "full",
+                "fixedLegendFilterSort": "TOP",
+                "y1Units": "",
+                "type": "line",
+                "y1UnitAutoscaling": false,
+                "tagMode": "all",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Leadership Election",
+              "base": 0,
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 6,
+                  "y": 0,
+                  "h": 8,
+                  "w": 2
+                }
+              },
+              "sources": [
+                {
+                  "name": "Is Leader",
+                  "query": "ts(etcd.server.is.leader.gauge)",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"_v\":1,\"metric\":\"ts(etcd.server.is.leader.gauge)\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                  "querybuilderEnabled": true
+                },
+                {
+                  "name": "Has Leader",
+                  "query": "ts(etcd.server.has.leader.gauge)",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"metric\":\"ts(etcd.server.has.leader.gauge)\",\"filters\":[[],\"and\"],\"functions\":[],\"_v\":1}",
+                  "querybuilderEnabled": true
+                },
+                {
+                  "name": "Leadership Changes",
+                  "query": "ts(etcd.server.leader.changes.seen.total.counter)",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"metric\":\"ts(etcd.server.leader.changes.seen.total.counter)\",\"filters\":[[],\"and\"],\"functions\":[],\"_v\":1}",
+                  "querybuilderEnabled": true
+                }
+              ],
+              "noDefaultEvents": false
+            },
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "sparklineDisplayFontSize": "100",
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendPosition": "RIGHT",
+                "customTags": [
+                  "cluster_name",
+                  "director"
+                ],
+                "showRawValues": false,
+                "lineType": "linear",
+                "showHosts": true,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "groupBySource": false,
+                "windowing": "full",
+                "sparklineSize": "BACKGROUND",
+                "fixedLegendFilterSort": "TOP",
+                "y1Units": "",
+                "sortValuesDescending": true,
+                "sparklineDisplayValueType": "VALUE",
+                "type": "line",
+                "y1UnitAutoscaling": false,
+                "showLabels": true,
+                "tagMode": "custom",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Memory Consumption",
+              "base": 0,
+              "chartAttributes": {
+                "singleStat": {
+                  "sparklineDisplayLabel": "A",
+                  "sparklineDisplaySubLabel": "New Chart"
+                },
+                "dashboardLayout": {
+                  "x": 8,
+                  "y": 0,
+                  "h": 8,
+                  "w": 4
+                }
+              },
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "ts(process.resident.memory.bytes.gauge)",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"_v\":1,\"metric\":\"ts(process.resident.memory.bytes.gauge)\",\"filters\":[[],\"and\"],\"functions\":[]}",
+                  "querybuilderEnabled": true
+                }
+              ],
+              "noDefaultEvents": false,
+              "description": "Overview of Clusters and Directors"
+            }
+          ],
+          "heightFactor": 160
+        },
+        {
+          "charts": [
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendEnabled": true,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "fixedLegendFilterLimit": 9,
+                "fixedLegendPosition": "BOTTOM",
+                "customTags": [],
+                "lineType": "linear",
+                "windowing": "full",
+                "fixedLegendFilterSort": "TOP",
+                "y1Units": "",
+                "type": "line",
+                "y1UnitAutoscaling": false,
+                "tagMode": "all",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Master Network Pressure",
+              "units": "Units",
+              "base": 0,
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 8,
+                  "h": 10,
+                  "w": 6
+                }
+              },
+              "sources": [
+                {
+                  "name": "Inbound Network Traffic",
+                  "query": "sum(rate(ts(node.network.receive.bytes.total.counter)), cluster_name)",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"_v\":1,\"metric\":\"ts(node.network.receive.bytes.total.counter)\",\"filters\":[[],\"and\"],\"functions\":[[\"rate\",[\"\"]],[\"sum\",[\"cluster_name\"]]]}",
+                  "querybuilderEnabled": true
+                },
+                {
+                  "name": "Outbound Network Traffic",
+                  "query": "sum(rate(ts(node.network.transmit.bytes.total.counter)), cluster_name) * -1",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderEnabled": false
+                }
+              ],
+              "noDefaultEvents": false
+            },
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendEnabled": true,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "fixedLegendFilterLimit": 9,
+                "fixedLegendPosition": "BOTTOM",
+                "customTags": [],
+                "lineType": "linear",
+                "windowing": "full",
+                "fixedLegendFilterSort": "TOP",
+                "y1Units": "",
+                "type": "line",
+                "y1UnitAutoscaling": false,
+                "tagMode": "all",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Master Node Disk Pressure",
+              "units": "Units",
+              "base": 0,
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 6,
+                  "y": 8,
+                  "h": 10,
+                  "w": 6
+                }
+              },
+              "sources": [
+                {
+                  "name": "Total Write Bytes",
+                  "query": "rate(ts(node.disk.written.bytes.total.counter))*-1",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderEnabled": false
+                },
+                {
+                  "name": "Total Read Bytles",
+                  "query": "rate(ts(node.disk.read.bytes.total.counter))",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"metric\":\"ts(node.disk.read.bytes.total.counter)\",\"filters\":[[],\"and\"],\"functions\":[[\"rate\",[\"\"]]],\"_v\":1}",
+                  "querybuilderEnabled": true
+                }
+              ],
+              "noDefaultEvents": false
+            }
+          ],
+          "heightFactor": 210
+        },
+        {
+          "charts": [
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendPosition": "RIGHT",
+                "customTags": [],
+                "lineType": "linear",
+                "windowing": "full",
+                "fixedLegendFilterSort": "TOP",
+                "y1Units": "",
+                "type": "line",
+                "y1UnitAutoscaling": false,
+                "tagMode": "all",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Rate of Slow Reads",
+              "units": "Units",
+              "base": 0,
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 18,
+                  "h": 5,
+                  "w": 6
+                }
+              },
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "rate(ts(etcd.server.slow.read.indexes.total.counter))",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"_v\":1,\"metric\":\"ts(etcd.server.slow.read.indexes.total.counter)\",\"filters\":[[],\"and\"],\"functions\":[[\"rate\",[\"\"]]]}",
+                  "querybuilderEnabled": true
+                }
+              ],
+              "noDefaultEvents": false
+            },
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendPosition": "RIGHT",
+                "customTags": [],
+                "lineType": "linear",
+                "windowing": "full",
+                "fixedLegendFilterSort": "TOP",
+                "y1Units": "",
+                "type": "line",
+                "y1UnitAutoscaling": false,
+                "tagMode": "all",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Rate of Slow Applies",
+              "units": "Units",
+              "base": 0,
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 6,
+                  "y": 18,
+                  "h": 5,
+                  "w": 6
+                }
+              },
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "rate(ts(etcd.server.slow.apply.total.counter))",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"_v\":1,\"metric\":\"ts(etcd.server.slow.apply.total.counter)\",\"filters\":[[],\"and\"],\"functions\":[[\"rate\",[\"\"]]]}",
+                  "querybuilderEnabled": true
+                }
+              ],
+              "noDefaultEvents": false
+            }
+          ],
+          "heightFactor": 100
+        },
+        {
+          "charts": [
+            {
+              "chartSettings": {
+                "y1ScaleSIBy1024": false,
+                "fixedLegendEnabled": true,
+                "fixedLegendFilterField": "CURRENT",
+                "y0ScaleSIBy1024": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendPosition": "RIGHT",
+                "customTags": [],
+                "lineType": "linear",
+                "windowing": "full",
+                "fixedLegendFilterSort": "TOP",
+                "y1Units": "",
+                "type": "line",
+                "y1UnitAutoscaling": false,
+                "tagMode": "all",
+                "fixedLegendUseRawStats": false,
+                "y0UnitAutoscaling": false,
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "autoColumnTags": false,
+                "numTags": 4,
+                "sparklineDisplayColor": null,
+                "sparklineLineColor": null,
+                "sparklineFillColor": null
+              },
+              "includeObsoleteMetrics": false,
+              "interpolatePoints": false,
+              "name": "Total Open File Descriptors",
+              "units": "Units",
+              "summarization": "MEAN",
+              "base": 0,
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 23,
+                  "h": 5,
+                  "w": 12
+                }
+              },
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "ts(process.open.fds.gauge)",
+                  "disabled": false,
+                  "secondaryAxis": false,
+                  "querybuilderSerialization": "{\"_v\":1,\"filters\":[[],\"and\"],\"functions\":[],\"metric\":\"ts(process.open.fds.gauge)\"}",
+                  "querybuilderEnabled": true,
+                  "sourceDescription": ""
+                }
+              ],
+              "noDefaultEvents": false
+            }
+          ],
+          "heightFactor": 100
+        }
+      ],
+      "name": "Overview"
+    }
+  ],
+  "parameterDetails": {}
+}
